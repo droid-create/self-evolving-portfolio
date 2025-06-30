@@ -1,25 +1,36 @@
-import React from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 
-const API_BASE_URL = process.env.REACT_APP_API_URL;
+const api = axios.create({
+    baseURL: process.env.REACT_APP_API_BASE_URL
+});
 
 const GitHubSyncButton = () => {
+    const [loading, setLoading] = useState(false);
+
     const handleSync = async () => {
+        if (loading) return; // Prevent multiple clicks
+        setLoading(true);
+
         try {
-            const response = await axios.get(`${API_BASE_URL}/api/projects/sync/github`);
-            alert('GitHub sync completed successfully!');
+            await api.get('/api/projects/sync/github');
+            toast.success('GitHub sync completed successfully!');
         } catch (error) {
-            alert('GitHub sync failed.');
-            console.error(error);
+            toast.error('GitHub sync failed. Check the console for details.');
+            console.error('GitHub Sync Error:', error);
+        } finally {
+            setLoading(false);
         }
     };
 
     return (
         <button
             onClick={handleSync}
-            className="bg-gradient-to-r from-blue-500 to-blue-700 text-white px-6 py-3 rounded-xl hover:scale-105 transform transition"
+            disabled={loading}
+            className={`bg-gradient-to-r from-blue-500 to-blue-700 text-white px-6 py-3 rounded-xl hover:scale-105 transform transition ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
         >
-            🔄 Sync GitHub Projects
+            {loading ? '🔄 Syncing...' : '🔄 Sync GitHub Projects'}
         </button>
     );
 };

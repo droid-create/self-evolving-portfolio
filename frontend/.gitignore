@@ -13,7 +13,7 @@ npm-debug.log*
 # OS files
 .DS_Store
 Thumbs.db
-
+.env
 # Build files
 frontend/build/
 
