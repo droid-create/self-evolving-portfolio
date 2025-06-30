@@ -10,7 +10,7 @@ const PORT = process.env.PORT || 5000;
 
 // ✅ Correct CORS Setup (for local and mobile access)
 const corsOptions = {
-    origin: http://localhost:3000
+    origin: 'http://localhost:3000',
     credentials: true
 };
 app.use(cors(corsOptions));
