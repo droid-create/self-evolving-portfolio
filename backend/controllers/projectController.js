@@ -1,46 +1,50 @@
+const axios = require('axios');
 const Project = require('../models/projects');
 
-// Get all projects
-const getAllProjects = async (req, res) => {
+// GitHub Sync Function
+const syncGitHubProjects = async (req, res) => {
     try {
-        const projects = await Project.find();
-        res.json(projects);
+        const githubUsername = 'droid-create'; // Your GitHub username
+        const githubApiUrl = `https://api.github.com/users/${githubUsername}/repos`;
+
+        console.log(`🔄 Starting GitHub sync for user: ${githubUsername}`);
+
+        const response = await axios.get(githubApiUrl);
+        const repos = response.data;
+
+        let newProjects = 0;
+
+        for (const repo of repos) {
+            const existingProject = await Project.findOne({ repoLink: repo.html_url });
+
+            if (!existingProject) {
+                const newProject = new Project({
+                    title: repo.name,
+                    description: repo.description || 'No description provided.',
+                    repoLink: repo.html_url,
+                    deployedLink: repo.homepage || '',
+                    techStack: [],
+                });
+
+                await newProject.save();
+                newProjects++;
+                console.log(`✅ Added project: ${repo.name}`);
+            } else {
+                console.log(`⚡ Skipped existing project: ${repo.name}`);
+            }
+        }
+
+        console.log(`🔔 GitHub sync completed. New projects added: ${newProjects}`);
+
+        res.json({
+            message: `GitHub sync completed successfully ✅`,
+            newProjectsAdded: newProjects,
+            totalReposFetched: repos.length
+        });
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        console.error('❌ GitHub Sync Error:', error.message);
+        res.status(500).json({ message: 'GitHub sync failed', error: error.message });
     }
 };
 
-// Create a new project
-const createProject = async (req, res) => {
-    const { title, description, repoLink, deployedLink, techStack } = req.body;
-
-    try {
-        const newProject = new Project({ title, description, repoLink, deployedLink, techStack });
-        const savedProject = await newProject.save();
-        res.status(201).json(savedProject);
-    } catch (error) {
-        res.status(400).json({ message: error.message });
-    }
-};
-
-// Update a project
-const updateProject = async (req, res) => {
-    try {
-        const updatedProject = await Project.findByIdAndUpdate(req.params.id, req.body, { new: true });
-        res.json(updatedProject);
-    } catch (error) {
-        res.status(400).json({ message: error.message });
-    }
-};
-
-// Delete a project
-const deleteProject = async (req, res) => {
-    try {
-        await Project.findByIdAndDelete(req.params.id);
-        res.json({ message: 'Project deleted successfully' });
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
-};
-
-module.exports = { getAllProjects, createProject, updateProject, deleteProject };
+module.exports = { syncGitHubProjects };

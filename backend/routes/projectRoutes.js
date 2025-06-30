@@ -1,6 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const { getAllProjects, createProject, updateProject, deleteProject } = require('../controllers/projectController');
+const { syncGitHubProjects } = require('../controllers/projectController');
+
+// GitHub sync route
+router.get('/sync/github', syncGitHubProjects);
 
 // Route to get all projects
 router.get('/', getAllProjects);
