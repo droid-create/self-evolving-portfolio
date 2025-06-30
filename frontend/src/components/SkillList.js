@@ -1,16 +1,28 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { deleteSkill } from '../api/skillApi';
+import { toast } from 'react-toastify';
 
 const SkillList = () => {
     const [skills, setSkills] = useState([]);
 
     const fetchSkills = async () => {
         try {
-            const response = await axios.get('http://localhost:5000/api/skills');
+            const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/skills`);
             setSkills(response.data);
         } catch (error) {
-            console.error('Error fetching skills', error);
+            console.error('Error fetching skills:', error);
+            toast.error('Failed to fetch skills.');
+        }
+    };
+
+    const handleDelete = async (id) => {
+        try {
+            await axios.delete(`${process.env.REACT_APP_API_BASE_URL}/api/skills/${id}`);
+            toast.success('Skill deleted successfully!');
+            fetchSkills();
+        } catch (error) {
+            console.error('Error deleting skill:', error);
+            toast.error('Failed to delete skill.');
         }
     };
 
@@ -18,27 +30,17 @@ const SkillList = () => {
         fetchSkills();
     }, []);
 
-    const handleDelete = async (id) => {
-        if (window.confirm('Are you sure you want to delete this skill?')) {
-            try {
-                await deleteSkill(id);
-                setSkills(skills.filter((skill) => skill._id !== id));
-                alert('Skill deleted successfully');
-            } catch (error) {
-                console.error('Failed to delete skill', error);
-            }
-        }
-    };
-
     return (
-        <div>
+        <div className="grid gap-6">
             {skills.map((skill) => (
-                <div key={skill._id} className="bg-white bg-opacity-20 backdrop-blur p-4 mb-4 rounded-xl shadow-md">
-                    <h3 className="text-xl font-bold text-green-200 mb-2">{skill.name}</h3>
-                    <p className="text-gray-200 mb-2">{skill.description}</p>
+                <div key={skill._id} className="bg-white bg-opacity-20 backdrop-blur p-4 rounded-xl shadow-md flex justify-between items-center">
+                    <div>
+                        <h3 className="text-xl font-bold text-purple-200">{skill.name}</h3>
+                        <p className="text-gray-200">{skill.proficiency}</p>
+                    </div>
                     <button
                         onClick={() => handleDelete(skill._id)}
-                        className="ml-4 bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700 transition"
+                        className="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700 transition"
                     >
                         Delete
                     </button>
