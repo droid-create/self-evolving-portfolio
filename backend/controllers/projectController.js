@@ -37,12 +37,14 @@ const updateProject = async (req, res) => {
 // 🔹 Delete Project
 const deleteProject = async (req, res) => {
     try {
-        await Project.findByIdAndDelete(req.params.id);
+        const projectId = req.params.id;
+        await Project.findByIdAndDelete(projectId);
         res.json({ message: 'Project deleted successfully' });
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        res.status(500).json({ message: 'Failed to delete project', error: error.message });
     }
 };
+
 
 // 🔹 Core GitHub Sync (Pure Function, No req/res)
 const githubSyncCore = async () => {

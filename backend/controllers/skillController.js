@@ -36,10 +36,11 @@ const updateSkill = async (req, res) => {
 // Delete a skill
 const deleteSkill = async (req, res) => {
     try {
-        await Skill.findByIdAndDelete(req.params.id);
+        const skillId = req.params.id;
+        await Skill.findByIdAndDelete(skillId);
         res.json({ message: 'Skill deleted successfully' });
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        res.status(500).json({ message: 'Failed to delete skill', error: error.message });
     }
 };
 
