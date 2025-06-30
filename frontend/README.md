@@ -1,70 +1,110 @@
-# Getting Started with Create React App
+# 🚀 Self-Evolving Portfolio (Local Deployment)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A dynamic, self-updating developer portfolio built with **Node.js, React, MongoDB, and Tailwind CSS.**
+It automatically syncs your GitHub projects and allows you to **add, update, and delete projects and skills — all running locally on your system.**
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+## 🌟 Features
 
-### `npm start`
+* 🔄 **GitHub Project Auto-Sync (One-Click)**
+* ➕ **Add, Update, and Delete Projects and Skills**
+* 🎨 **Modern, Responsive UI with Tailwind CSS**
+* ✅ **Real-Time Toast Notifications**
+* 🖥️ **Runs Locally on Your Machine (Not Deployed)**
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+---
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## 🛠️ Tech Stack
 
-### `npm test`
+* **Frontend:** React, Tailwind CSS, Axios
+* **Backend:** Node.js, Express.js, MongoDB
+* **External API:** GitHub API Integration
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+---
 
-### `npm run build`
+## 📂 Local Setup Instructions
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### 1. Clone the Repository
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```bash
+git clone https://github.com/droid-create/self-evolving-portfolio.git
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### 2. Backend Setup
 
-### `npm run eject`
+```bash
+cd self-evolving-portfolio/backend
+npm install
+node server.js
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### 3. Frontend Setup
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```bash
+cd ../frontend
+npm install
+npm start
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+---
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## ⚙️ Environment Variables
 
-## Learn More
+### Backend `.env`
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```env
+MONGO_URI=your_local_mongodb_connection_string
+PORT=5000
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### Frontend `.env`
 
-### Code Splitting
+```env
+REACT_APP_API_BASE_URL=http://localhost:5000
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+---
 
-### Analyzing the Bundle Size
+## 🚀 GitHub Sync
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+Click the **🔄 Sync GitHub Projects** button in the frontend to pull your public repositories automatically into your portfolio.
 
-### Making a Progressive Web App
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+## 📎 License
 
-### Advanced Configuration
+This project is licensed under the **MIT License.**
+You can freely use, modify, and distribute this project.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+---
 
-### Deployment
+## 🛡️ Disclaimer
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+This project is **not deployed online.**
+It is intended for **local use only.**
+Please ensure your `.env` files are **not pushed to public repositories.**
 
-### `npm run build` fails to minify
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## 📧 Contact
+
+**Divesh**
+GitHub: [droid-create](https://github.com/droid-create)
+
+---
+
+## ✅ Future Enhancements (Optional)
+
+* Add delete confirmation modals
+* Add authentication (local session)
+* Improve mobile responsiveness
+* Add custom animations and loading states
+
+---
+
+## ✅ Deliverables
+
+* 📄 Clean, local-first README
+* 🔒 Proper license and security warning
+* 🛠️ Practical setup steps
