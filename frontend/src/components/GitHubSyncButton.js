@@ -1,10 +1,12 @@
 import React from 'react';
 import axios from 'axios';
 
+const API_BASE_URL = process.env.REACT_APP_API_URL;
+
 const GitHubSyncButton = () => {
     const handleSync = async () => {
         try {
-            const response = await axios.get('http://localhost:5000/api/projects/sync/github');
+            const response = await axios.get(`${API_BASE_URL}/api/projects/sync/github`);
             alert('GitHub sync completed successfully!');
         } catch (error) {
             alert('GitHub sync failed.');
